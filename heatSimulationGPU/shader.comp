@@ -1,0 +1,67 @@
+// COMPUTE SHADER
+
+#version 440 core
+
+layout(std430, binding = 0) buffer data {
+	float temperatures[];
+};
+
+layout (local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
+
+uniform uvec2 mousePos;
+uniform int mousePressed;
+uniform uint radius;
+
+uniform float alpha;
+
+void setTemp(uint index, float value) {
+	for (int i = 0; i < 6; i++) {
+		temperatures[6 * index + i] = value;
+	}
+}
+
+float getTemp(uint index) {
+	return temperatures[6 * index];
+}
+
+void main() {
+	uint index = gl_WorkGroupID.x * gl_NumWorkGroups.y + gl_WorkGroupID.y;
+	
+	if (mousePressed != 0) {
+		uvec2 diff = gl_WorkGroupID.xy - mousePos;
+		if (diff.x * diff.x + diff.y * diff.y <= radius * radius) {
+			if (mousePressed == 1) {
+				setTemp(index, 1.0);
+			}
+			else if (mousePressed == 2) {
+				setTemp(index, 0.0);
+			}
+			
+			return;
+		}
+	}
+	
+	float sum = 0.0;
+	
+	if (gl_WorkGroupID.x != 0) {
+		sum += getTemp(index - gl_NumWorkGroups.y);
+		sum -= getTemp(index);
+	}
+	
+	if (gl_WorkGroupID.x != gl_NumWorkGroups.x - 1) {
+		sum += getTemp(index + gl_NumWorkGroups.y);
+		sum -= getTemp(index);
+	}
+	
+	if (gl_WorkGroupID.y != 0) {
+		sum += getTemp(index - 1);
+		sum -= getTemp(index);
+	}
+	
+	if (gl_WorkGroupID.y != gl_NumWorkGroups.y - 1) {
+		sum += getTemp(index + 1);
+		sum -= getTemp(index);
+	}
+	
+	setTemp(index, getTemp(index) + sum * alpha);
+}
