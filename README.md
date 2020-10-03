@@ -17,3 +17,5 @@ Increase/decrease the radius of heat addition/removal by scrolling up/down.
 [GLM](https://glm.g-truc.net/0.9.9/index.html) for OpenGL vector and matrix operations.
 
 ## Images
+![Heat](/images/heat.gif)
+![Heat](/images/heat.png)
