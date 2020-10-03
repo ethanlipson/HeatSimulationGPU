@@ -7,17 +7,13 @@ If one wanted to write this program entirely on the CPU, they would loop over ea
 This program dispatches one instance of the computer shader for each cell, computing the gradients in parallel.
 
 ## Controls
-Add heat around the mouse with left click.
-
-Remove heat around the mouse with right click
-
+Add heat around the mouse with left click.  
+Remove heat around the mouse with right click.  
 Increase/decrease the radius of heat addition/removal by scrolling up/down.
 
 ## Dependencies
-[GLFW](https://www.glfw.org/) for windowing and handling input.
-
-[GLAD](https://glad.dav1d.de/) for loading OpenGL function pointers.
-
+[GLFW](https://www.glfw.org/) for windowing and handling input.  
+[GLAD](https://glad.dav1d.de/) for loading OpenGL function pointers.  
 [GLM](https://glm.g-truc.net/0.9.9/index.html) for OpenGL vector and matrix operations.
 
 ## Images
