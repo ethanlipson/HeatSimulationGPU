@@ -18,4 +18,3 @@ Increase/decrease the radius of heat addition/removal by scrolling up/down.
 
 ## Images
 ![Heat](/images/heat.gif)
-![Heat](/images/heat.png)
